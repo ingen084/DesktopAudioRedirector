@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopAudioRedirector", "DesktopAudioRedirector\DesktopAudioRedirector.csproj", "{97730BAE-9FE0-4755-82BB-DAF1EF6EC086}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97730BAE-9FE0-4755-82BB-DAF1EF6EC086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97730BAE-9FE0-4755-82BB-DAF1EF6EC086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97730BAE-9FE0-4755-82BB-DAF1EF6EC086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97730BAE-9FE0-4755-82BB-DAF1EF6EC086}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBF1AD6D-BF17-47AC-8E96-0B9852D8EC9D}
+	EndGlobalSection
+EndGlobal
