@@ -36,6 +36,7 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -81,7 +82,7 @@
 			this.groupBox1.Controls.Add(this.comboBox2);
 			this.groupBox1.Controls.Add(this.comboBox1);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Location = new System.Drawing.Point(6, 5);
+			this.groupBox1.Location = new System.Drawing.Point(6, 10);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(272, 69);
 			this.groupBox1.TabIndex = 2;
@@ -109,6 +110,7 @@
 			// 
 			// button2
 			// 
+			this.button2.Enabled = false;
 			this.button2.Location = new System.Drawing.Point(116, 80);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
@@ -117,11 +119,23 @@
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.ClearBufferButtonClicked);
 			// 
+			// button3
+			// 
+			this.button3.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button3.Location = new System.Drawing.Point(256, 1);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(26, 23);
+			this.button3.TabIndex = 3;
+			this.button3.Text = "";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.RefleshDevicesButtonClicked);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 115);
+			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.groupBox1);
@@ -147,6 +161,7 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button3;
 	}
 }
 
