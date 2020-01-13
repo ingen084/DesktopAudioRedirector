@@ -102,7 +102,7 @@ namespace DesktopAudioRedirector
 			else
 				Capture = new WasapiCapture(device);
 			WaveFormat = Capture.WaveFormat;
-			Buffer = new byte[WaveFormat.BitsPerSample * WaveFormat.SampleRate];
+			Buffer = new byte[WaveFormat.BitsPerSample * WaveFormat.SampleRate / 2];
 			Capture.DataAvailable += (s, e) =>
 			{
 				lock (LockObject)
@@ -127,6 +127,7 @@ namespace DesktopAudioRedirector
 			Capture.StartRecording();
 		}
 
+		private bool FirstRead { get; set; } = true;
 		private byte[] Buffer { get; }
 		//private int BuffOffset { get; set; }
 		public int BufferLength { get; set; }
@@ -146,6 +147,13 @@ namespace DesktopAudioRedirector
 			{
 				lock (LockObject)
 				{
+					// Bluetoothなどでは初回出力まで時間がかかるため初回出力の場合バッファをリセットさせる
+					if (FirstRead)
+					{
+						BufferLength = 0;
+						FirstRead = false;
+					}
+
 					if (BufferLength > 0)
 					{
 						// 収まる場合
