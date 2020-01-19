@@ -15,10 +15,17 @@ namespace DesktopAudioRedirector
 			InitializeComponent();
 
 			RefleshDevices();
-			BufferTimer = new System.Threading.Timer(s => Invoke(new Action(() =>
+			BufferTimer = new System.Threading.Timer(s =>
 			{
-				label3.Text = $"Buffer: " + capture?.BufferLength;
-			})), null, -1, -1);
+				try
+				{
+					Invoke(new Action(() =>
+					{
+						label3.Text = $"Buffer: " + capture?.BufferLength;
+					}));
+				}
+				catch (ObjectDisposedException) { }
+			}, null, -1, -1);
 		}
 
 		WasapiCaptureWaveProvider capture;
@@ -51,10 +58,10 @@ namespace DesktopAudioRedirector
 			{
 				BufferTimer.Change(-1, -1);
 				label3.Text = "Buffer: -";
-				capture?.Stop();
-				capture = null;
 				wout?.Dispose();
 				wout = null;
+				capture?.Stop();
+				capture = null;
 				button1.Text = "開始";
 				groupBox1.Enabled = true;
 				button2.Enabled = false;
