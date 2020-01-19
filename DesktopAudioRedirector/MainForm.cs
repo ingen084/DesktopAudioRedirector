@@ -33,18 +33,30 @@ namespace DesktopAudioRedirector
 
 		private void RefleshDevices()
 		{
+			var selected1 = comboBox1.SelectedItem?.ToString();
+			var selected2 = comboBox2.SelectedItem?.ToString();
 			comboBox1.Items.Clear();
 			comboBox2.Items.Clear();
 			var ennumerator = new MMDeviceEnumerator();
 			foreach (var point in ennumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active))
 			{
 				comboBox1.Items.Add(point);
+				if (point.ToString() == selected1)
+					comboBox1.SelectedItem = point;
 				comboBox2.Items.Add(point);
+				if (point.ToString() == selected2)
+					comboBox2.SelectedItem = point;
 			}
 			foreach (var point in ennumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active))
+			{
 				comboBox1.Items.Add(point);
-			comboBox1.SelectedIndex = comboBox2.SelectedIndex = 0;
-
+				if (point.ToString() == selected1)
+					comboBox1.SelectedItem = point;
+			}
+			if (comboBox1.SelectedIndex < 0)
+				comboBox1.SelectedIndex = 0;
+			if (comboBox2.SelectedIndex < 0)
+				comboBox2.SelectedIndex = 0;
 		}
 
 		private void RefleshDevicesButtonClicked(object sender, EventArgs e)
