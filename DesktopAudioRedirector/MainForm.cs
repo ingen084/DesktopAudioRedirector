@@ -9,6 +9,7 @@ namespace DesktopAudioRedirector
 	public partial class MainForm : Form
 	{
 		System.Threading.Timer BufferTimer { get; }
+		int[] LengthBuffer { get; set; } = new int[10];
 
 		public MainForm()
 		{
@@ -21,7 +22,14 @@ namespace DesktopAudioRedirector
 				{
 					Invoke(new Action(() =>
 					{
-						label3.Text = $"Buffer: " + capture?.BufferLength;
+						if (capture == null) return;
+						Buffer.BlockCopy(LengthBuffer, 1, LengthBuffer, 0, (LengthBuffer.Length - 1) * sizeof(int));
+						LengthBuffer[LengthBuffer.Length - 1] = capture.BufferLength;
+						double maxVal = 0;
+						for (var i = 0; i < LengthBuffer.Length; i++)
+							maxVal = Math.Max(maxVal, LengthBuffer[i]);
+						var spms = capture.WaveFormat.SampleRate * (capture.WaveFormat.BitsPerSample / 8) * capture.WaveFormat.Channels / 1000.0;
+						label3.Text = $"遅延: {maxVal / spms: 000.00}ms";
 					}));
 				}
 				catch (ObjectDisposedException) { }
@@ -106,10 +114,10 @@ namespace DesktopAudioRedirector
 		{
 			base.OnClosed(e);
 			BufferTimer.Change(-1, -1);
-			capture?.Stop();
-			capture = null;
 			wout?.Dispose();
 			wout = null;
+			capture?.Stop();
+			capture = null;
 		}
 	}
 	public class WasapiCaptureWaveProvider : IWaveProvider
@@ -121,7 +129,7 @@ namespace DesktopAudioRedirector
 			else
 				Capture = new WasapiCapture(device);
 			WaveFormat = Capture.WaveFormat;
-			Buffer = new byte[WaveFormat.BitsPerSample * WaveFormat.SampleRate / 2];
+			Buffer = new byte[WaveFormat.BitsPerSample * (WaveFormat.SampleRate / 8) /*/ WaveFormat.Channels*/ / 2];
 			Capture.DataAvailable += (s, e) =>
 			{
 				lock (LockObject)
