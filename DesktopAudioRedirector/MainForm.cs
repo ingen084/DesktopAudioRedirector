@@ -23,7 +23,7 @@ namespace DesktopAudioRedirector
 					Invoke(new Action(() =>
 					{
 						if (capture == null) return;
-						Buffer.BlockCopy(LengthBuffer, 1, LengthBuffer, 0, (LengthBuffer.Length - 1) * sizeof(int));
+						Buffer.BlockCopy(LengthBuffer, sizeof(int), LengthBuffer, 0, (LengthBuffer.Length - 1) * sizeof(int));
 						LengthBuffer[LengthBuffer.Length - 1] = capture.BufferLength;
 						double maxVal = 0;
 						for (var i = 0; i < LengthBuffer.Length; i++)
@@ -129,7 +129,7 @@ namespace DesktopAudioRedirector
 			else
 				Capture = new WasapiCapture(device);
 			WaveFormat = Capture.WaveFormat;
-			Buffer = new byte[WaveFormat.BitsPerSample * (WaveFormat.SampleRate / 8) /*/ WaveFormat.Channels*/ / 2];
+			Buffer = new byte[WaveFormat.SampleRate * (WaveFormat.BitsPerSample / 8) / 2];
 			Capture.DataAvailable += (s, e) =>
 			{
 				lock (LockObject)
